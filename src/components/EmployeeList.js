@@ -37,7 +37,7 @@ function EmployeeList() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:1455/api/v1/emp/employees/${id}`, {
+            await axios.delete(`https://101410218-comp3123-assignment2-nodejs.vercel.app/api/v1/emp/employees/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

@@ -14,7 +14,7 @@ function Signup() {
     e.preventDefault();
     setErrorMessage(""); 
     try {
-      const response = await axios.post("http://localhost:1455/api/v1/user/signup", {
+      const response = await axios.post("https://101410218-comp3123-assignment2-nodejs.vercel.app/api/v1/user/signup", {
         username,
         email,
         password,

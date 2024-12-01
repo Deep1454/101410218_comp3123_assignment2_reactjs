@@ -11,7 +11,7 @@ function EmployeeDetails() {
     const fetchEmployee = async () => {
       try {
         const token = localStorage.getItem('token'); 
-        const response = await axios.get(`http://localhost:1455/api/v1/emp/employees/${id}`, {
+        const response = await axios.get(`https://101410218-comp3123-assignment2-nodejs.vercel.app/api/v1/emp/employees/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`, 
           },
