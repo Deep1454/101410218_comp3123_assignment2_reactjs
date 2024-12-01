@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
-function EmployeeForm() {
+function Employeeadd() {
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [position, setPosition] = useState('');
   const [salary, setSalary] = useState('');
   const [department, setDepartment] = useState('');
+  const [date_of_joining, setDateOfJoining] = useState('');
   const [token, setToken] = useState(localStorage.getItem('token')); 
   const { id } = useParams(); 
   const navigate = useNavigate(); 
 
- 
   useEffect(() => {
     if (id) {
       axios
@@ -28,6 +28,7 @@ function EmployeeForm() {
           setPosition(employee.position);
           setSalary(employee.salary);
           setDepartment(employee.department);
+          setDateOfJoining(employee.date_of_joining);  
         })
         .catch((error) => {
           console.error('Error fetching employee details:', error);
@@ -35,7 +36,6 @@ function EmployeeForm() {
     }
   }, [id, token]);
 
- 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,17 +46,16 @@ function EmployeeForm() {
       position,
       salary,
       department,
+      date_of_joining, 
     };
 
     try {
       if (id) {
-       
         await axios.put(`http://localhost:1455/api/v1/emp/employees/${id}`, employeeData, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('Employee updated successfully');
       } else {
-        
         await axios.post('http://localhost:1455/api/v1/emp/employees', employeeData, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -70,7 +69,9 @@ function EmployeeForm() {
 
   return (
     <div>
-      <h2 style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>{id ? 'Edit Employee' : 'Add Employee'}</h2>
+      <h2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        {id ? 'Edit Employee' : 'Add Employee'}
+      </h2>
       <form onSubmit={handleSubmit}>
         <div className="wholeform">
           <label>First Name</label>
@@ -132,6 +133,16 @@ function EmployeeForm() {
             required
           />
         </div>
+        <div className="wholeform">
+          <label>Date of Joining</label>
+          <input
+            type="date"
+            className="form-control"
+            value={date_of_joining}
+            onChange={(e) => setDateOfJoining(e.target.value)}  
+            required
+          />
+        </div>
         <div className="wholeform mt-3">
           <button type="submit" className="btn btn-primary">
             {id ? 'Update Employee' : 'Add Employee'}
@@ -142,4 +153,4 @@ function EmployeeForm() {
   );
 }
 
-export default EmployeeForm;
+export default Employeeadd;
