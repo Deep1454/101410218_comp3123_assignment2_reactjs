@@ -51,12 +51,12 @@ function Employeeadd() {
 
     try {
       if (id) {
-        await axios.put(`http://localhost:1455/api/v1/emp/employees/${id}`, employeeData, {
+        await axios.put(`https://101410218-comp3123-assignment2-nodejs.vercel.app/api/v1/emp/employees/${id}`, employeeData, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('Employee updated successfully');
       } else {
-        await axios.post('http://localhost:1455/api/v1/emp/employees', employeeData, {
+        await axios.post('https://101410218-comp3123-assignment2-nodejs.vercel.app/api/v1/emp/employees', employeeData, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('Employee added successfully');
