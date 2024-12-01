@@ -1,0 +1,80 @@
+.employee-list-container {
+    padding: 20px;
+}
+
+.employee-list-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.employee-list-search {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.employee-list-search input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.employee-list-search button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.employee-list-add {
+    margin-bottom: 20px;
+}
+
+.employee-list-add button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.employee-list-table th,
+.employee-list-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.employee-list-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.employee-list-actions button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.employee-list-actions .view-btn {
+    background-color: blue;
+    color: white;
+}
+
+.employee-list-actions .edit-btn {
+    background-color: skyblue;
+    color: black;
+}
+
+.employee-list-actions .delete-btn {
+    background-color: red;
+    color: white;
+}

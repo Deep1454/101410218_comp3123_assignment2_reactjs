@@ -1,128 +1,145 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-function Employeeadd() {
+function EmployeeForm() {
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [position, setPosition] = useState('');
   const [salary, setSalary] = useState('');
-  const [date_of_joining, setDateOfJoining] = useState('');
   const [department, setDepartment] = useState('');
-  const navigate = useNavigate();
+  const [token, setToken] = useState(localStorage.getItem('token')); 
+  const { id } = useParams(); 
+  const navigate = useNavigate(); 
 
+ 
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`http://localhost:1455/api/v1/emp/employees/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          const employee = response.data;
+          setFirstName(employee.first_name);
+          setLastName(employee.last_name);
+          setEmail(employee.email);
+          setPosition(employee.position);
+          setSalary(employee.salary);
+          setDepartment(employee.department);
+        })
+        .catch((error) => {
+          console.error('Error fetching employee details:', error);
+        });
+    }
+  }, [id, token]);
+
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const employeeData = {
       first_name,
       last_name,
       email,
       position,
       salary,
-      date_of_joining,
       department,
     };
 
     try {
-     
-      const token = localStorage.getItem('token');
-
-     
-      if (!token) {
-        alert('You must be logged in to create an employee.');
-        navigate('/login'); 
-        return;
+      if (id) {
+       
+        await axios.put(`http://localhost:1455/api/v1/emp/employees/${id}`, employeeData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        alert('Employee updated successfully');
+      } else {
+        
+        await axios.post('http://localhost:1455/api/v1/emp/employees', employeeData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        alert('Employee added successfully');
       }
-
-     
-      const response = await axios.post('http://localhost:1455/api/v1/emp/employees', employeeData, {
-        headers: {
-          Authorization: `Bearer ${token}`, 
-        },
-      });
-
-     
-      alert('Employee created successfully!');
-      navigate('/employees'); 
+      navigate('/employees');
     } catch (error) {
-      
-      alert('Error creating employee');
-      console.error(error);
+      console.error('Error submitting form:', error);
     }
   };
 
   return (
     <div>
-      <h2>Create Employee</h2>
+      <h2 style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>{id ? 'Edit Employee' : 'Add Employee'}</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>First Name:</label>
+        <div className="wholeform">
+          <label>First Name</label>
           <input
             type="text"
+            className="form-control"
             value={first_name}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Last Name:</label>
+        <div className="wholeform">
+          <label>Last Name</label>
           <input
             type="text"
+            className="form-control"
             value={last_name}
             onChange={(e) => setLastName(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Email:</label>
+        <div className="wholeform">
+          <label>Email</label>
           <input
             type="email"
+            className="form-control"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Position:</label>
+        <div className="wholeform">
+          <label>Position</label>
           <input
             type="text"
+            className="form-control"
             value={position}
             onChange={(e) => setPosition(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Salary:</label>
+        <div className="wholeform">
+          <label>Salary</label>
           <input
             type="number"
+            className="form-control"
             value={salary}
             onChange={(e) => setSalary(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Date of Joining:</label>
-          <input
-            type="date"
-            value={date_of_joining}
-            onChange={(e) => setDateOfJoining(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Department:</label>
+        <div className="wholeform">
+          <label>Department</label>
           <input
             type="text"
+            className="form-control"
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Create Employee</button>
+        <div className="wholeform mt-3">
+          <button type="submit" className="btn btn-primary">
+            {id ? 'Update Employee' : 'Add Employee'}
+          </button>
+        </div>
       </form>
     </div>
   );
 }
 
-export default Employeeadd;
+export default EmployeeForm;
