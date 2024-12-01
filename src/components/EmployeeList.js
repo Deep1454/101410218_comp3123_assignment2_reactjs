@@ -13,7 +13,7 @@ function EmployeeList() {
     const fetchEmployees = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:1455/api/v1/emp/employees', {
+            const response = await axios.get('https://101410218-comp3123-assignment2-nodejs.vercel.app/api/v1/emp/employees', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
